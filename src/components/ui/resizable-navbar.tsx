@@ -54,9 +54,34 @@ export const Navbar = ({ children, className }: NavbarProps) => {
     target: ref,
     offset: ["start start", "end start"],
   })
-  const [visible, setVisible] = useState<boolean>(false)
+  const [reachedTop, setReachedTop] = useState<boolean>(true)
+  // track scroll to check if scrolling up
+  const [isScrollingUp, setIsScrollingUp] = useState<boolean>(true)
+  // track scroll to check if scrolling up based on previous scroll
+  const [prevScrollY, setPrevScrollY] = useState<number>(0)
 
+  // track down scroll
+  const [visible, setVisible] = useState<boolean>(false)
   useMotionValueEvent(scrollY, "change", (latest) => {
+    // for sticking with top
+    if (latest === 0) {
+      setReachedTop(true)
+    } else {
+      setReachedTop(false)
+    }
+    // for scrolling up effect
+    if (latest > prevScrollY && latest > 100) {
+      // Scrolling down and past 50px
+      setIsScrollingUp(false)
+    } else {
+      // Scrolling up or near top
+      setIsScrollingUp(true)
+    }
+
+    // set the current scroll for next scroll check
+    setPrevScrollY(latest)
+
+    // for scrolling down effect
     if (latest > 100) {
       setVisible(true)
     } else {
@@ -67,8 +92,15 @@ export const Navbar = ({ children, className }: NavbarProps) => {
   return (
     <motion.div
       ref={ref}
-      // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
-      className={cn("sticky inset-x-0 top-0  z-10 w-full", className)}
+      animate={{
+        y: reachedTop ? 0 : isScrollingUp ? "20%" : "-150%",
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 200,
+        damping: 30,
+      }}
+      className={cn("sticky inset-x-0 top-0 z-50 w-full", className)}
     >
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
@@ -152,10 +184,11 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
+        // width: visible ? "90%" : "100%",
         width: visible ? "90%" : "100%",
         paddingRight: visible ? "12px" : "0px",
         paddingLeft: visible ? "12px" : "0px",
-        borderRadius: visible ? "4px" : "2rem",
+        // borderRadius: visible ? "4px" : "2rem",
         y: visible ? 20 : 0,
       }}
       transition={{
@@ -164,7 +197,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         damping: 50,
       }}
       className={cn(
-        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
+        "relative z-40 mx-auto flex w-full max-w-[calc(100vw-2rem)] rounded-full flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
         visible && "bg-white/80 dark:bg-neutral-950/80",
         className
       )}
@@ -181,7 +214,7 @@ export const MobileNavHeader = ({
   return (
     <div
       className={cn(
-        "flex w-full flex-row items-center justify-between",
+        "flex w-full flex-row rounded-full items-center justify-between",
         className
       )}
     >
@@ -223,9 +256,15 @@ export const MobileNavToggle = ({
   onClick: () => void
 }) => {
   return isOpen ? (
-    <IconX className="text-black dark:text-white" onClick={onClick} />
+    <IconX
+      className="text-black dark:text-white cursor-pointer"
+      onClick={onClick}
+    />
   ) : (
-    <IconMenu2 className="text-black dark:text-white" onClick={onClick} />
+    <IconMenu2
+      className="text-black dark:text-white cursor-pointer"
+      onClick={onClick}
+    />
   )
 }
 

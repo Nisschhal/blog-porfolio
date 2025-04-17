@@ -43,7 +43,7 @@ export default function RootLayout({
         >
           <div className="flex flex-col min-h-screen ">
             <Header />
-            <div className="grow">{children}</div>
+            <div className="grow -z-10">{children}</div>
             <Footer />
           </div>
         </ThemeProvider>

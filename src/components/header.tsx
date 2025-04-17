@@ -49,7 +49,7 @@ export function Header() {
         <MobileNav>
           <MobileNavHeader>
             <NavbarLogo />
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2   ">
               <ThemeToggle />
               <MobileNavToggle
                 isOpen={isMobileMenuOpen}

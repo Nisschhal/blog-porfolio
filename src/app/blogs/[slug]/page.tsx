@@ -5,25 +5,41 @@ import { formatDate } from "@/lib/utils"
 import Image from "next/image"
 import { ArrowLeftIcon } from "lucide-react"
 import Link from "next/link"
+import { s } from "motion/react-client"
 
-type Props = {
+// define the ParamsProps
+type ParamsProps = {
   params: Promise<{ slug: string }>
 }
-const BlogPost = async ({ params }: Props) => {
+
+// define the BlogPost component
+const components = {
+  // define the h2 as function with children to render such as textnode
+  h1: ({ children }: any) => <h1 className="font-serif">{children}</h1>,
+  h2: ({ children }: any) => <h2 className="font-serif">{children}</h2>,
+}
+
+const BlogPost = async ({ params }: ParamsProps) => {
+  // get the slug from the params
   const { slug } = await params
+
+  // fetch the post by slug
   const post = await getPostBySlug(slug)
 
+  // if no post, return 404
   if (!post) {
     notFound()
   }
 
+  // destructure the post
   const { metadata, content } = post
 
+  // destructure the metadata
   const { title, description, publishedAt, author, image } = metadata
 
   return (
     <section className="py-16 lg:py-24">
-      <div className="container  ">
+      <div className="  ">
         <Link href="/posts" className="flex items-center space-x-2">
           <ArrowLeftIcon className="size-5" />
           <span>Back to posts</span>
@@ -48,7 +64,7 @@ const BlogPost = async ({ params }: Props) => {
         </header>
 
         <main className="prose dark:prose-invert mt-16">
-          <MDXRemote source={content} />
+          <MDXRemote source={content} components={components} />
         </main>
       </div>
     </section>
