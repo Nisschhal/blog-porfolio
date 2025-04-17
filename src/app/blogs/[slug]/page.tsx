@@ -6,6 +6,7 @@ import Image from "next/image"
 import { ArrowLeftIcon } from "lucide-react"
 import Link from "next/link"
 import { s } from "motion/react-client"
+import MDXContent from "@/components/mdx-content"
 
 // define the ParamsProps
 type ParamsProps = {
@@ -64,7 +65,8 @@ const BlogPost = async ({ params }: ParamsProps) => {
         </header>
 
         <main className="prose dark:prose-invert mt-16">
-          <MDXRemote source={content} components={components} />
+          {/* <MDXRemote source={content} components={components} /> */}
+          <MDXContent source={content} />
         </main>
       </div>
     </section>
