@@ -1,39 +1,3 @@
-// // define mdx content wrapper wich has custom code and jsx compnoents
-
-// import { JSX } from "react"
-// import { highlight } from "suger-high"
-// import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc"
-
-// // Dummy JSX Component
-
-// function Code({ children, ...props }: JSX.IntrinsicElements["code"]) {
-//   let codeHtml = highlight(children)
-
-//   return (
-//     <code
-//       {...props}
-//       dangerouslySetInnerHTML={{
-//         __html: codeHtml,
-//       }}
-//     />
-//   )
-// }
-
-// const components = {
-//   code: Code,
-//   // Comonents
-// }
-
-// export default function MDXContent(
-//   props: JSX.IntrinsicAttributes & MDXRemoteProps
-// ) {
-//   return (
-//     <MDXRemote
-//       {...props}
-//       components={{ ...components, ...(props.components || {}) }}
-//     />
-//   )
-// }
 import { JSX } from "react"
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc"
 import remarkGfm from "remark-gfm"
@@ -71,7 +35,7 @@ export default function MDXContent(
             [
               rehypePrettyCode,
               {
-                theme: "nord",
+                theme: "github-dark", // define the theme you want for your code or rehype: re-hyperlink which is html
                 keepBackground: true,
                 onVisitLine(node: {
                   tagName: string
