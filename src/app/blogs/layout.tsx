@@ -10,5 +10,5 @@ export default function BlogLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <div className="flex container max-w-[800px] py-16">{children}</div>
+  return <div className="container   ">{children}</div>
 }

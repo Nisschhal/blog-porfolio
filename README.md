@@ -8,4 +8,7 @@ Technologies
 Packages
 
 - @tailwindcss/typography
+- next-mdx-remote : for remote markdown files
+- gray-matter : for parsing markdown files, frontmatter, and metadata
+
 # blog-porfolio

@@ -1,0 +1,63 @@
+---
+title: "Introduction to MDX in Next.js"
+publishedAt: "2025-04-15"
+slug: "intro-to-mdx"
+author: "Your Name"
+description: "Everything you need to start with Next.js in one place"
+image: "/images/posts/nextjs-guide.png"
+category: "web development"
+tags: ["next.js", "react", "frontend"]
+---
+
+# MDX in Next.js
+
+MDX combines Markdown with JSX, enabling dynamic, interactive content in Next.js. It's ideal for blogs or documentation needing React components within Markdown.
+
+## Setup
+
+Install dependencies:
+
+```bash
+npm install @next/mdx @mdx-js/loader @mdx-js/react
+```
+
+Configure `next.config.js`:
+
+```js
+const withMDX = require("@next/mdx")()
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
+}
+
+module.exports = withMDX(nextConfig)
+```
+
+## Example MDX File
+
+Create `pages/blog-post.mdx`:
+
+```mdx
+import { MyComponent } from "../components/MyComponent"
+
+# My Blog Post
+
+This is Markdown text.
+
+<MyComponent name="World" />
+```
+
+## Custom Component
+
+Create `components/MyComponent.jsx`:
+
+```jsx
+export function MyComponent({ name }) {
+  return <p>Hello, {name}!</p>
+}
+```
+
+Next.js renders the `.mdx` file as a page, converting Markdown to HTML and including React components.
+
+Learn more in the [Next.js MDX docs](https://nextjs.org/docs/app/building-your-application/configuring/mdx).

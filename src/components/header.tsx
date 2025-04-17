@@ -32,7 +32,7 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   return (
-    <div className="relative w-full ">
+    <div className="w-full sticky top-0 ">
       <Navbar>
         {/* Desktop Navigation */}
         <NavBody>
