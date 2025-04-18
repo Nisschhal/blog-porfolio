@@ -280,7 +280,7 @@ export const NavbarLogo = () => {
         width={30}
         height={30}
       />
-      <span className="font-medium text-xl font-serif text-black dark:text-white">
+      <span className="font-bold font-serif text-xl  text-black dark:text-white">
         NisXhal P
         <span className="text-green-500 text-2xl animate-pulse duration-300 transition-all">
           .
